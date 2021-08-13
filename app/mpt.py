@@ -166,7 +166,9 @@ def find_optimal_allocation(risk_tolerance):
     for i in range(len(COINS)):
         c = COINS[i]
         result = {'coin': c, 'allocation': optimal_allocation[i]}
+        result['log_mean'] = str(expected_returns[c])
         result['mean'] = str(round((numpy.exp(expected_returns[c]) - 1) * 100, 3)) + '%'
+        result['log_std'] = str(df.std()[c])
         result['std'] = str(round((numpy.exp(df.std()[c]) - 1) * 100, 2)) + '%'
         results.append(result)
     results.sort(key = lambda r: -r['allocation'])
