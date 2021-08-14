@@ -172,5 +172,13 @@ def find_optimal_allocation(risk_tolerance):
         result['std'] = str(round((numpy.exp(df.std()[c]) - 1) * 100, 2)) + '%'
         results.append(result)
     results.sort(key = lambda r: -r['allocation'])
-    return(results)
+    
+    return_dict = {"allocation": results}
+    
+    # Return values for the optimal portfolio
+    return_dict['optimal_log_return'] = portfolio_return(optimal_allocation, expected_returns)
+    return_dict['optimal_log_risk'] = portfolio_risk(optimal_allocation, covariance_matrix)
+    return_dict['optimal_return'] = str(round((numpy.exp(optimal_log_return) - 1) * 100, 3)) + '%'
+    return_dict['optimal_risk'] = str(round((numpy.exp(optimal_log_risk) - 1) * 100, 2)) + '%'
+    return(return_dict)
     
