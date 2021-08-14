@@ -123,7 +123,7 @@ def portfolio_return(weights, returns):
 
 def value(weights, tolerance, cov, returns):
     """
-    returns the value of a given portfolio
+    returns the negative value of a given portfolio
     tolerance is the risk tolerance
     """
     r = portfolio_risk(weights, cov)
@@ -177,7 +177,7 @@ def find_optimal_allocation(risk_tolerance):
     
     # Return values for the optimal portfolio
     optimal_log_return = portfolio_return(optimal_allocation, expected_returns)
-    optimal_log_risk = portfolio_risk(optimal_allocation, covariance_matrix)
+    optimal_log_risk = numpy.sqrt(portfolio_risk(optimal_allocation, covariance_matrix))
     return_dict['optimal_log_return'] = optimal_log_return
     return_dict['optimal_log_risk'] = optimal_log_risk
     return_dict['optimal_return'] = str(round((numpy.exp(optimal_log_return) - 1) * 100, 3)) + '%'
