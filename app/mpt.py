@@ -176,8 +176,10 @@ def find_optimal_allocation(risk_tolerance):
     return_dict = {"allocation": results}
     
     # Return values for the optimal portfolio
-    return_dict['optimal_log_return'] = portfolio_return(optimal_allocation, expected_returns)
-    return_dict['optimal_log_risk'] = portfolio_risk(optimal_allocation, covariance_matrix)
+    optimal_log_return = portfolio_return(optimal_allocation, expected_returns)
+    optimal_log_risk = portfolio_risk(optimal_allocation, covariance_matrix)
+    return_dict['optimal_log_return'] = optimal_log_return
+    return_dict['optimal_log_risk'] = optimal_log_risk
     return_dict['optimal_return'] = str(round((numpy.exp(optimal_log_return) - 1) * 100, 3)) + '%'
     return_dict['optimal_risk'] = str(round((numpy.exp(optimal_log_risk) - 1) * 100, 2)) + '%'
     return(return_dict)
