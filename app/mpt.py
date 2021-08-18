@@ -147,6 +147,24 @@ def optimise_portfolio(tolerance, cov, returns):
 
 
 def find_optimal_allocation(risk_tolerance):
+    # Map risk tolerance
+    if risk_tolerance == 1:
+        risk_tolerance = 5
+        tolerance_result = "Highly Aggressive"
+    elif risk_tolerance == 2:
+        risk_tolerance = 2
+        tolerance_result = "Aggressive"
+    elif risk_tolerance == 3:
+        risk_tolerance = 1
+        tolerance_result = "Average"
+    elif risk_tolerance == 4:
+        risk_tolerance = 0.5
+        tolerance_result = "Stable"
+    elif risk_tolerance == 5:
+        risk_tolerance = 0.2
+        tolerance_result = "Highly Stable"
+    else:
+        raise(Exception('Invalid risk tolerance'))
     # Load data from CoinGecko API
     data = load_data(COINS)
     # Index data by timestamp
@@ -182,5 +200,7 @@ def find_optimal_allocation(risk_tolerance):
     return_dict['optimal_log_risk'] = optimal_log_risk
     return_dict['optimal_return'] = str(round((numpy.exp(optimal_log_return) - 1) * 100, 3)) + '%'
     return_dict['optimal_risk'] = str(round((numpy.exp(optimal_log_risk) - 1) * 100, 2)) + '%'
+    
+    return_dict['tolerance'] = tolerance_result
     return(return_dict)
     
