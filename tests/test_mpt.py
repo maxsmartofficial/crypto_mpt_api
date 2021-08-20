@@ -2,13 +2,13 @@ import pytest
 from app.mpt import *
 
 
-#data = load_data(COINS)
+data = load_data(COINS)
 
-#def test_crypto_list():
-#
-#    # Check each coin has at least half the days available
-#    for c in data:
-#        assert(len(data[c]) > 365)
+def test_crypto_list():
+
+    # Check each coin has at least half the days available
+    for c in data:
+        assert(len(data[c]) > 365)
 
 DAY = 86400000
 
@@ -55,6 +55,7 @@ test_timestamp_data = {
     }
 
 
+
 def test_transform_to_timestamp():
 
 
@@ -84,6 +85,16 @@ def test_clean_dataframe():
     assert(dataframe.coin3.sum() == 8)
     
 
+
+def test_calculate_returns():
+
+    dataframe = transform_to_dataframe(test_timestamp_data)
+    dataframe = clean_dataframe(dataframe)
+    returns = calculate_returns(dataframe)
+    assert(returns.iloc[0].coin1 == 0)
+    assert(returns.iloc[0].coin3 == numpy.log(2/1))
+    assert(returns.iloc[2].coin2 == numpy.log(2/1))
+    assert(returns.iloc[2].coin3 == numpy.log(3/2))
 
 
 
