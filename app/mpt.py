@@ -75,6 +75,7 @@ def transform_to_dataframe(data):
         date = datetime.datetime.fromtimestamp(d/1000).date()
         new_data[date] = data[d]
     df = pandas.DataFrame.from_dict(new_data, orient='index')
+    df = df.sort_index()
     return(df)
     
 def clean_dataframe(df):
