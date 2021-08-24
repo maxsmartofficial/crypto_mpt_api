@@ -1,4 +1,4 @@
-from app import app
+from app import app, cache
 from flask import request, jsonify
 from .mpt import find_optimal_allocation
 
@@ -14,5 +14,12 @@ def mpt():
         tolerance = float(tolerance)
     except:
         return(404)
-    results = find_optimal_allocation(tolerance)
+    
+    results = cache.get(str(tolerance))
+    if results is None:
+        print('Calculating:', tolerance)
+        results = find_optimal_allocation(tolerance)
+        cache.set(str(tolerance), results)
+    else:
+        print('Fetched from cache:', tolerance)
     return(jsonify(results))
