@@ -160,10 +160,10 @@ def find_optimal_allocation(risk_tolerance):
         tolerance_result = "Average"
     elif risk_tolerance == 4:
         risk_tolerance = 0.5
-        tolerance_result = "Stable"
+        tolerance_result = "Conservative"
     elif risk_tolerance == 5:
         risk_tolerance = 0.2
-        tolerance_result = "Highly Stable"
+        tolerance_result = "Highly Conservative"
     else:
         raise(Exception('Invalid risk tolerance'))
     # Load data from CoinGecko API
