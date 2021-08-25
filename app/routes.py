@@ -2,7 +2,7 @@ from app import app, cache
 from flask import request, jsonify
 from .mpt import find_optimal_allocation
 
-ROUTE = '/mpt_api/v1.0/'
+ROUTE = '/crypto_mpt_api/v1.0/'
 
 @app.route(ROUTE, methods=["GET"])
 def mpt():
