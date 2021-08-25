@@ -11,6 +11,7 @@ cd crypto_mpt_api
 Install the requirements in a virtual environment:
 ```
 python3 -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
 ```
 Run some tests:
