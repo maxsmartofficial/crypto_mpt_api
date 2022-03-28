@@ -28,7 +28,7 @@ flask run
 ```
 Now that's running, you can access the API like this:
 ```
-curl http://127.0.0.1:5000/mpt_api/v1.0/?tolerance=1
+curl http://127.0.0.1:5000/crypto_mpt_api/v1.0/?tolerance=1
 ```
 And here are the results:
 ```Javascript
