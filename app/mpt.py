@@ -12,26 +12,22 @@ COINS = [
     'tether',
     'binancecoin',
     'cardano',
+	'litecoin',
     'ripple',
     'dogecoin',
-    'vechain',
     'matic-network',
     'ethereum-classic',
-    'litecoin',
-    'theta-token',
     'bitcoin-cash',
-    'bitcoin-cash-sv',
     'stellar',
-    'terra-luna',
     'okb',
     'chainlink',
     'tron',
     'ftx-token',
     'monero',
     'neo',
-    'cosmos',
-    'maker',
-    'tezos'
+    'tezos',
+	'vechain',
+	'theta-network'
 ]
 
 def load_data(crypto_list):
@@ -45,10 +41,13 @@ def load_data(crypto_list):
         this_morning = datetime.datetime.now().replace(hour=0,
             minute=0,second=0,microsecond=0).timestamp()
         long_ago = this_morning - 730*24*60*60
-        price_data = cg.get_coin_market_chart_range_by_id(id=c, vs_currency=vs,
-            from_timestamp = long_ago, to_timestamp = this_morning)['prices']
-        results[c] = price_data
-        
+        try:
+            price_data = cg.get_coin_market_chart_range_by_id(id=c, vs_currency=vs,
+                from_timestamp = long_ago, to_timestamp = this_morning)['prices']
+            results[c] = price_data
+        except:
+            continue
+
     return(results)
     
 def transform_to_timestamp(data):
@@ -168,7 +167,9 @@ def find_optimal_allocation(risk_tolerance):
         raise(Exception('Invalid risk tolerance'))
     # Load data from CoinGecko API
     data = load_data(COINS)
-    # Index data by timestamp
+    available_coins = list(data.keys())
+
+	# Index data by timestamp
     t = transform_to_timestamp(data)
     # Convert the indices to date format and use a pandas DataFrame
     df = transform_to_dataframe(t)
@@ -182,8 +183,8 @@ def find_optimal_allocation(risk_tolerance):
     # Calculate the optimal portfolio
     optimal_allocation = optimise_portfolio(risk_tolerance, covariance_matrix, expected_returns)
     results = []
-    for i in range(len(COINS)):
-        c = COINS[i]
+    for i in range(len(available_coins)):
+        c = available_coins[i]
         result = {'coin': c, 'allocation': optimal_allocation[i]}
         result['log_mean'] = str(expected_returns[c])
         result['mean'] = str(round((numpy.exp(expected_returns[c]) - 1) * 100, 3)) + '%'
