@@ -5,7 +5,7 @@ from flask_caching import Cache
 
 config = {
     "DEBUG": True,          # some Flask specific configs
-    "CACHE_TYPE": "filesystem",  # Flask-Caching related configs
+    "CACHE_TYPE": "FileSystemCache",  # Flask-Caching related configs
     "CACHE_DEFAULT_TIMEOUT": 86400,
     "CACHE_DIR": "./cache/"
 }
